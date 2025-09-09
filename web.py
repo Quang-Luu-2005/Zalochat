@@ -2,12 +2,14 @@ import os
 import requests
 
 BOT_KEY = os.getenv("BOT_TOKEN")
-WEBHOOK_URL = "https://23e610035351.ngrok-free.app/webhook"
+SECRET = os.getenv("SECRET_TOKEN")
+
+WEBHOOK_URL = "https://zalochat.onrender.com/webhook"
 
 url = f"https://bot-api.zapps.me/bot{BOT_KEY}/setWebhook"
 payload = {
     "url": WEBHOOK_URL,
-    "secret_token": "my-secret-123456"
+    "secret_token": SECRET
 }
 headers = {"Content-Type": "application/json"}
 
