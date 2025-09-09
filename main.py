@@ -1,20 +1,20 @@
+import os
 from flask import Flask, request, jsonify
 import requests
 
 app = Flask(__name__)
 
-API_KEY = "4147509766183600867:MyjqrNunuGMtzVQlEWigzhjUegupgtMFSmzsxZVzQKrsJSpnbYiXotQiQUctkEof"   # thay bằng key thật
+API_KEY = os.getenv("BOT_TOKEN")
 BASE_URL = f"https://bot-api.zapps.me/bot{API_KEY}"
 
-SECRET_TOKEN = "my-secret-123456"
+SECRET_TOKEN = os.getenv("SECRET_TOKEN")
 
 def send_message(chat_id, text):
-    """Gửi tin nhắn trả lời người dùng"""
     url = f"{BASE_URL}/sendMessage"
     headers = {"Content-Type": "application/json"}
     data = {
-        "recipient": {"id": chat_id},
-        "message": {"text": text}
+        "chat_id": chat_id,
+        "text": text
     }
     response = requests.post(url, headers=headers, json=data)
     print("Send response:", response.text)
@@ -22,7 +22,6 @@ def send_message(chat_id, text):
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    """Nhận dữ liệu từ Zalo"""
     token = request.headers.get("X-Bot-Api-Secret-Token")
     if token != SECRET_TOKEN:
         return jsonify({"error": "Invalid secret token"}), 403

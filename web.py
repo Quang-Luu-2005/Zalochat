@@ -1,6 +1,7 @@
+import os
 import requests
 
-BOT_KEY = "4147509766183600867:MyjqrNunuGMtzVQlEWigzhjUegupgtMFSmzsxZVzQKrsJSpnbYiXotQiQUctkEof"
+BOT_KEY = os.getenv("BOT_TOKEN")
 WEBHOOK_URL = "https://23e610035351.ngrok-free.app/webhook"
 
 url = f"https://bot-api.zapps.me/bot{BOT_KEY}/setWebhook"
