@@ -59,9 +59,9 @@ def get_bot_reply(user_text: str) -> str:
     """
     text = user_text.strip().lower()
 
-    if text == "hello":
+    if text == "hello" or text == "hi" or text == "chào":
         return "Xin chào! 🤖 Mình là bot của bạn."
-    elif text == "info":
+    elif text == "info" or text == "thông tin" or text == "giới thiệu":
         return "Mình được viết bằng Python Flask, chạy 24/7 trên Render 🚀"
     elif text == "vietlott 6/45" or text == "6/45":
         return f"Bộ số 6/45 của bạn là: {generate_vietlott_numbers(45)}"
