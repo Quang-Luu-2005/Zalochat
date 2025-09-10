@@ -70,27 +70,26 @@ def send_message(chat_id, text):
     return response.json()
 
 def get_bot_reply(user_text: str) -> str:
-    """
-    Xử lý logic hội thoại và trả về câu trả lời
-    """
+    """Xử lý và trả lời tin nhắn từ người dùng"""
     text = user_text.strip().lower()
 
-    if text == "hello" or text == "hi" or text == "chào":
+    if text in ("hello", "hi", "chào"):
         return "Xin chào! 🤖 Mình là bot của bạn."
-    elif text == "info" or text == "thông tin" or text == "giới thiệu":
+    elif text in ("info", "thông tin", "giới thiệu"):
         return "Mình được viết bằng Python Flask, chạy 24/7 trên Render 🚀"
-    elif text == "vietlott 6/45" or text == "6/45":
+    elif text in ("vietlott 6/45", "6/45"):
         return f"Bộ số 6/45 của bạn là: {generate_vietlott_numbers(45)}"
-    elif text == "vietlott 6/55" or text == "6/55":
+    elif text in ("vietlott 6/55", "6/55"):
         return f"Bộ số 6/55 của bạn là: {generate_vietlott_numbers(55)}"
-    elif text == "vietlott hôm nay" or text == "cho số" or text == "số ngay" or text == "số vietlott hôm nay" or text == "hôm nay":
+    elif text in ("vietlott hôm nay", "cho số", "số ngay", "số vietlott hôm nay", "hôm nay"):
         return get_vietlott_today()
-    elif text == "vietlott careful 6/45" or text == "kỹ 6/45" or text == "cho số kỹ 6/45":
+    elif text in ("vietlott careful 6/45", "kỹ 6/45", "cho số kỹ 6/45"):
         return f"Bộ số chọn kỹ lưỡng 6/45: {choose_carefully(45)}"
-    elif text == "vietlott careful 6/55" or text == "kỹ 6/55" or text == "cho số kỹ 6/55":
+    elif text in ("vietlott careful 6/55", "kỹ 6/55", "cho số kỹ 6/55"):
         return f"Bộ số chọn kỹ lưỡng 6/55: {choose_carefully(55)}"
     else:
         return ask_gemini(user_text)
+
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
