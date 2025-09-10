@@ -4,15 +4,26 @@ import requests
 import random
 import json
 import datetime
-
-
+import google.generativeai as genai
 app = Flask(__name__)
 
+
+GEMINI_TOKEN = os.getenv("GENIUS_API_KEY")
 API_KEY = os.getenv("BOT_TOKEN")
 BASE_URL = f"https://bot-api.zapps.me/bot{API_KEY}"
 
 SECRET_TOKEN = os.getenv("SECRET_TOKEN")
 
+model = genai.GenerativeModel("gemini-2.5-flash")
+
+def ask_gemini(prompt: str) -> str:
+    """Gửi câu hỏi tới Gemini và trả lời"""
+    try:
+        response = model.generate_content(prompt)
+        return response.text.strip()
+    except Exception as e:
+        return f"⚠️ Lỗi khi gọi Gemini: {e}"
+    
 def get_vietlott_today() -> str:
     """Trả về bộ số Vietlott dựa trên ngày trong tuần"""   
     today = datetime.datetime.today().weekday()
@@ -51,14 +62,14 @@ def get_bot_reply(user_text: str) -> str:
         return "Xin chào! 🤖 Mình là bot của bạn."
     elif text == "info":
         return "Mình được viết bằng Python Flask, chạy 24/7 trên Render 🚀"
-    elif text == "vietlott 6/45":
+    elif text == "vietlott 6/45" or text == "6/45":
         return f"Bộ số 6/45 của bạn là: {generate_vietlott_numbers(45)}"
-    elif text == "vietlott 6/55":
+    elif text == "vietlott 6/55" or text == "6/55":
         return f"Bộ số 6/55 của bạn là: {generate_vietlott_numbers(55)}"
-    elif text == "vietlott hôm nay":
+    elif text == "vietlott hôm nay" or text == "cho số ngay":
         return get_vietlott_today()
     else:
-        return f"Bạn vừa nói: {user_text}"
+        return ask_gemini(user_text)
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
