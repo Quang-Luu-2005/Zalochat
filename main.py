@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 
 GEMINI_TOKEN = os.getenv("GENIUS_API_KEY")
+genai.configure(api_key=os.getenv("GENIUS_API_KEY"))
 API_KEY = os.getenv("BOT_TOKEN")
 BASE_URL = f"https://bot-api.zapps.me/bot{API_KEY}"
 
