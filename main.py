@@ -81,11 +81,11 @@ def get_bot_reply(user_text: str) -> str:
         return f"Bộ số 6/45 của bạn là: {generate_vietlott_numbers(45)}"
     elif text == "vietlott 6/55" or text == "6/55":
         return f"Bộ số 6/55 của bạn là: {generate_vietlott_numbers(55)}"
-    elif text == "vietlott hôm nay" or text == "cho số ngay" or text == "số ngay" or text == "số vietlott hôm nay" or text == "hôm nay":
+    elif text == "vietlott hôm nay" or text == "cho số" or text == "số ngay" or text == "số vietlott hôm nay" or text == "hôm nay":
         return get_vietlott_today()
-    elif text == "vietlott careful 6/45" or text == "kỹ 6/45":
+    elif text == "vietlott careful 6/45" or text == "kỹ 6/45" or text == "cho số kỹ 6/45":
         return f"Bộ số chọn kỹ lưỡng 6/45: {choose_carefully(45)}"
-    elif text == "vietlott careful 6/55" or text == "kỹ 6/55":
+    elif text == "vietlott careful 6/55" or text == "kỹ 6/55" or text == "cho số kỹ 6/55":
         return f"Bộ số chọn kỹ lưỡng 6/55: {choose_carefully(55)}"
     else:
         return ask_gemini(user_text)
