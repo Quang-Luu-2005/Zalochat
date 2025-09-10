@@ -7,7 +7,9 @@ import datetime
 from collections import Counter
 import google.generativeai as genai
 app = Flask(__name__)
+import zoneinfo
 
+VN_TZ = zoneinfo.ZoneInfo("Asia/Ho_Chi_Minh")
 
 GEMINI_TOKEN = os.getenv("GENIUS_API_KEY")
 genai.configure(api_key=os.getenv("GENIUS_API_KEY"))
@@ -28,7 +30,7 @@ def ask_gemini(prompt: str) -> str:
     
 def get_vietlott_today() -> str:
     """Trả về bộ số Vietlott dựa trên ngày trong tuần"""   
-    today = datetime.datetime.today().weekday()
+    today = datetime.datetime.now(VN_TZ).weekday()
 
     if today in [1, 3, 5]:  # Thứ 3, 5, 7
         return f"Hôm nay là thứ {today+2}, bộ số 6/55 của bạn: {generate_vietlott_numbers(55)}"
