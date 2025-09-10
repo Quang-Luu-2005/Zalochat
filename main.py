@@ -67,7 +67,7 @@ def get_bot_reply(user_text: str) -> str:
         return f"Bộ số 6/45 của bạn là: {generate_vietlott_numbers(45)}"
     elif text == "vietlott 6/55" or text == "6/55":
         return f"Bộ số 6/55 của bạn là: {generate_vietlott_numbers(55)}"
-    elif text == "vietlott hôm nay" or text == "cho số ngay":
+    elif text == "vietlott hôm nay" or text == "cho số ngay" or text == "số ngay" or text == "số vietlott hôm nay" or text == "hôm nay":
         return get_vietlott_today()
     else:
         return ask_gemini(user_text)
