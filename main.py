@@ -4,6 +4,7 @@ import requests
 import random
 import json
 import datetime
+from collections import Counter
 import google.generativeai as genai
 app = Flask(__name__)
 
@@ -41,6 +42,19 @@ def generate_vietlott_numbers(max_number: int, count: int = 6) -> str:
     numbers.sort()
     return " ".join(str(n) for n in numbers)
 
+def choose_carefully(max_number: int, simulations: int = 100, count: int = 6) -> str:
+    """Chọn bộ số Vietlott dựa trên tần suất xuất hiện trong các mô phỏng"""
+    freq = Counter()
+
+    for _ in range(simulations):
+        nums = random.sample(range(1, max_number + 1), count)
+        freq.update(nums)
+
+    most_common_nums = [num for num, _ in freq.most_common(count)]
+    most_common_nums.sort()
+
+    return " ".join(str(n) for n in most_common_nums)
+
 def send_message(chat_id, text):
     """Gửi tin nhắn văn bản cho người dùng"""
     url = f"{BASE_URL}/sendMessage"
@@ -69,6 +83,10 @@ def get_bot_reply(user_text: str) -> str:
         return f"Bộ số 6/55 của bạn là: {generate_vietlott_numbers(55)}"
     elif text == "vietlott hôm nay" or text == "cho số ngay" or text == "số ngay" or text == "số vietlott hôm nay" or text == "hôm nay":
         return get_vietlott_today()
+    elif text == "vietlott careful 6/45" or text == "kỹ 6/45":
+        return f"Bộ số chọn kỹ lưỡng 6/45: {choose_carefully(45)}"
+    elif text == "vietlott careful 6/55" or text == "kỹ 6/55":
+        return f"Bộ số chọn kỹ lưỡng 6/55: {choose_carefully(55)}"
     else:
         return ask_gemini(user_text)
 
