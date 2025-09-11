@@ -73,19 +73,19 @@ def get_bot_reply(user_text: str) -> str:
     """Xử lý và trả lời tin nhắn từ người dùng"""
     text = user_text.strip().lower()
 
-    if text in ("hello", "hi", "chào"):
+    if any(k in text for k in ("hello", "hi", "chào")):
         return "Xin chào! 🤖 Mình là bot của bạn."
-    elif text in ("info", "thông tin", "giới thiệu"):
+    elif any(k in text for k in ("info", "thông tin", "giới thiệu")):
         return "Mình được viết bằng Python Flask, chạy 24/7 trên Render 🚀"
-    elif text in ("vietlott 6/45", "6/45"):
+    elif any(k in text for k in ("vietlott 6/45", "6/45")):
         return f"Bộ số 6/45 của bạn là: {generate_vietlott_numbers(45)}"
-    elif text in ("vietlott 6/55", "6/55"):
+    elif any(k in text for k in ("vietlott 6/55", "6/55")):
         return f"Bộ số 6/55 của bạn là: {generate_vietlott_numbers(55)}"
-    elif text in ("vietlott hôm nay", "cho số", "số ngay", "số vietlott hôm nay", "hôm nay"):
+    elif any(k in text for k in ("vietlott hôm nay", "cho số", "số ngay", "số vietlott hôm nay", "hôm nay")):
         return get_vietlott_today()
-    elif text in ("vietlott careful 6/45", "kỹ 6/45", "cho số kỹ 6/45"):
+    elif any(k in text for k in ("vietlott careful 6/45", "kỹ 6/45", "cho số kỹ 6/45")):
         return f"Bộ số chọn kỹ lưỡng 6/45: {choose_carefully(45)}"
-    elif text in ("vietlott careful 6/55", "kỹ 6/55", "cho số kỹ 6/55"):
+    elif any(k in text for k in ("vietlott careful 6/55", "kỹ 6/55", "cho số kỹ 6/55")):
         return f"Bộ số chọn kỹ lưỡng 6/55: {choose_carefully(55)}"
     else:
         return ask_gemini(user_text)
